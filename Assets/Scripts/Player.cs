@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public bool isTouchRight;
     public bool isTouchLeft;
     
+    
     //총알 발사 딜레이 로직을 위한 변수
  
 
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
     //총알 prefab을 저장할 변수 생성
     public GameObject bulletObjectA;
     public GameObject bulletObjectB;
+    public GameManager manager;
     
     Animator anim;
 
@@ -135,6 +137,11 @@ public class Player : MonoBehaviour
                     isTouchLeft = true;
                     break;
             }
+        }
+        else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
+        {
+            manager.RespawnPlayer();
+            gameObject.SetActive(false);
         }
     }
 
