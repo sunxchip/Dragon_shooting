@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 /// <summary>
 /// 적 스폰
 /// </summary>
@@ -10,7 +11,11 @@ public class GameManager : MonoBehaviour
    public float maxSpawnDelay;
    public float curSpawnDelay;
 
+   //UI
    public GameObject player;
+   public Text ScoreText;
+   public Image[] lifeImages;
+   public GameObject gameOverSet;
    
    void Update()
    {
@@ -22,6 +27,10 @@ public class GameManager : MonoBehaviour
          maxSpawnDelay = Random.Range(0.5f,3f);
          curSpawnDelay = 0;
       }
+      
+      //UI score update
+      Player playerLogic = player.GetComponent<Player>();
+      ScoreText.text=string.Format("{0:n0}", playerLogic.score);
    }
 
    void SpawnEnemy()
@@ -52,6 +61,20 @@ public class GameManager : MonoBehaviour
       }
    }
 
+   public void UpdateLifeIcon(int life)
+   {
+      //UI life init Disable
+      for (int index = 0; index < 3; index++)
+      {
+         lifeImages[index].color=new Color(1,1,1,0);
+      }
+      //UI life Active
+      for (int index = 0; index < life; index++)
+      {
+         lifeImages[index].color=new Color(1,1,1,1);
+      }
+   }
+
    public void RespawnPlayer()
    {
       Invoke("RespawnPlayerExe",2f);
@@ -61,5 +84,10 @@ public class GameManager : MonoBehaviour
    {
       player.transform.position = Vector3.down * 2f;
       player.SetActive(true);
+   }
+
+   public void GameOver()
+   {
+      gameOverSet.SetActive(true);
    }
 }

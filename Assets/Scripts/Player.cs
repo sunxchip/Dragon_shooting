@@ -1,5 +1,6 @@
 using System;
 using Mono.Cecil;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +11,9 @@ public class Player : MonoBehaviour
     public bool isTouchBottom;
     public bool isTouchRight;
     public bool isTouchLeft;
+    
+    public int score;
+    public int life;
     
     
     //총알 발사 딜레이 로직을 위한 변수
@@ -140,8 +144,21 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
+            life--;
+            manager.UpdateLifeIcon(life);
+
+            if (life == 0)
+            {
+                manager.GameOver();
+            }
+            else
+            {
+                manager.RespawnPlayer();
+            }
+            
             manager.RespawnPlayer();
             gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
 

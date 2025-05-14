@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     public int health;
     public Sprite[] sprites;
 
+    public int enemyScore;
+
     public GameObject bulletObjectA;
     public GameObject bulletObjectB;
     
@@ -86,6 +88,8 @@ public class Enemy : MonoBehaviour
         //죽으면 파괴
         if (health <= 0)
         {
+            Player playerLogic = player.GetComponent<Player>();
+            playerLogic.score += enemyScore;
             Destroy(gameObject);
         }
     }
