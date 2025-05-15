@@ -6,14 +6,22 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed;
-    public float power;
+    public int power;
+    public int maxPower;
+
+    public int boom;
+    public int maxBoom;
     public bool isTouchTop;
     public bool isTouchBottom;
     public bool isTouchRight;
     public bool isTouchLeft;
-    
+    public bool isHit;
+    public bool isBoomTime;
+
     public int score;
     public int life;
+    
+    
     
     
     //총알 발사 딜레이 로직을 위한 변수
@@ -27,6 +35,9 @@ public class Player : MonoBehaviour
     public GameObject bulletObjectB;
     public GameManager manager;
     
+    public GameObject boomEffect;
+    
+    
     Animator anim;
 
      void Awake()
@@ -39,7 +50,14 @@ public class Player : MonoBehaviour
         Move();
         Fire();
         Reload();
+        Boom();
     }
+    
+    void Start()
+    {
+        life = 3;
+    }
+
 //캡슐화
      void Move()
     {
@@ -122,6 +140,41 @@ public class Player : MonoBehaviour
         curShotDelay += Time.deltaTime;
     }
 
+    void Boom()
+    {
+        if(!Input.GetButton("Fire2"))
+            return;
+        if(isBoomTime)
+            return;
+        if(boom ==0)
+            return;
+
+        boom--;
+        isBoomTime = true;
+        manager.UpdateBoomIcon(boom);
+        
+        
+        //#1 이펙트 켜기
+        boomEffect.SetActive(true);
+        Invoke("OffBoomEffect",4f);
+                    
+        //#2 Enemy 지우기
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int index = 0; index < enemies.Length; index++)
+        {
+            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
+            enemyLogic.OnHit(1000);
+        }
+                    
+        //#3 총알도 같이 지우기
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+        for (int index = 0; index < bullets.Length; index++)
+        {
+            Destroy(bullets[index]);
+        }
+        
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Border")
@@ -144,6 +197,11 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
+            
+            if (isHit)
+                return;
+            
+            isHit = true;
             life--;
             manager.UpdateLifeIcon(life);
 
@@ -154,14 +212,49 @@ public class Player : MonoBehaviour
             else
             {
                 manager.RespawnPlayer();
+                
             }
             
-            manager.RespawnPlayer();
+            
             gameObject.SetActive(false);
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.tag == "Item")
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            switch (item.type)
+            {
+                case "Coin":
+                    score += 1000;
+                    break;
+                case "Power" :
+                    if (power == maxPower)
+                        score += 500;
+                    else
+                        power++;
+                    break;
+                case "Boom":
+                    if (boom == maxBoom)
+                        score += 500;
+                    else
+                    {
+                        boom++;
+                        manager.UpdateBoomIcon(boom);
+                    }
+                    
+
+                    break;
+                    
+            } //아이템 먹으면 삭제
             Destroy(collision.gameObject);
         }
     }
 
+    void OffBoomEffect()
+    {
+        boomEffect.SetActive(false);
+        isBoomTime = false;
+    }
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Border")

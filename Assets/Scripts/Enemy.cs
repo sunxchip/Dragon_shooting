@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class Enemy : MonoBehaviour
@@ -14,6 +15,10 @@ public class Enemy : MonoBehaviour
 
     public GameObject bulletObjectA;
     public GameObject bulletObjectB;
+    
+    public GameObject itemCoin;
+    public GameObject itemBoom;
+    public GameObject itemPower;
     
     public float maxShotDelay; //현재의 딜레이
     public float curShotDelay; //총알을 쏘고나서의 딜레이
@@ -78,8 +83,12 @@ public class Enemy : MonoBehaviour
     
 //총알을 맞았을때 데미지 
 //맞았을때 스프라이트 변환
-    void OnHit(int dmg)
+    public void OnHit(int dmg)
     {
+        if(health <= 0)
+            return;
+        
+        
         health -= dmg;
         spriteRenderer.sprite = sprites[1];
         //바꾼 스프라이트를 돌리기 위해 시간차 함수 호출
@@ -90,6 +99,26 @@ public class Enemy : MonoBehaviour
         {
             Player playerLogic = player.GetComponent<Player>();
             playerLogic.score += enemyScore;
+            
+            //#. Random Ratio Item Drop
+            int ran = Random.Range(0, 10);
+            if (ran < 3) //Not Item 30%
+            {
+                Debug.Log("Not Item");
+            }
+            else if (ran < 6) //Coin 30%
+            {
+                Instantiate(itemCoin,transform.position, itemCoin.transform.rotation);
+            }
+            else if (ran < 8) //Power 20%
+            {
+                Instantiate(itemPower,transform.position, itemPower.transform.rotation);
+            }
+            else if (ran < 10) //boom 20%
+            {
+                Instantiate(itemBoom,transform.position, itemBoom.transform.rotation);
+            }
+            
             Destroy(gameObject);
         }
     }

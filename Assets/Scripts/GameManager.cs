@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 적 스폰
 /// </summary>
@@ -13,8 +14,9 @@ public class GameManager : MonoBehaviour
 
    //UI
    public GameObject player;
-   public Text ScoreText;
-   public Image[] lifeImages;
+   public Text scoreText;
+   public Image[] lifeImage;
+   public Image[] boomImage;
    public GameObject gameOverSet;
    
    void Update()
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
       
       //UI score update
       Player playerLogic = player.GetComponent<Player>();
-      ScoreText.text=string.Format("{0:n0}", playerLogic.score);
+      scoreText.text=string.Format("{0:n0}", playerLogic.score);
    }
 
    void SpawnEnemy()
@@ -66,28 +68,50 @@ public class GameManager : MonoBehaviour
       //UI life init Disable
       for (int index = 0; index < 3; index++)
       {
-         lifeImages[index].color=new Color(1,1,1,0);
+         lifeImage[index].color=new Color(1,1,1,0);
       }
       //UI life Active
       for (int index = 0; index < life; index++)
       {
-         lifeImages[index].color=new Color(1,1,1,1);
+         lifeImage[index].color=new Color(1,1,1,1);
       }
    }
 
+   public void UpdateBoomIcon(int boom)
+   {
+      //UI boom init Disable
+      for (int index = 0; index < 3; index++)
+      {
+         boomImage[index].color=new Color(1,1,1,0);
+      }
+      //UI boom Active
+      for (int index = 0; index < boom; index++)
+      {
+         boomImage[index].color=new Color(1,1,1,1);
+      }
+   }
    public void RespawnPlayer()
    {
       Invoke("RespawnPlayerExe",2f);
    }
    
+   //한번에 두발 동시에 맞을 시 두번 죽지 않도록 예외처리 추가 
   void RespawnPlayerExe()
    {
       player.transform.position = Vector3.down * 2f;
       player.SetActive(true);
+      
+      Player playerLogic = player.GetComponent<Player>();
+      playerLogic.isHit = false;
    }
 
    public void GameOver()
    {
       gameOverSet.SetActive(true);
+   }
+
+   public void GameRetry()
+   {
+      SceneManager.LoadScene(0);
    }
 }

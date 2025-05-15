@@ -188,8 +188,12 @@ MonoBehaviour:
   sprites:
   - {fileID: -1923979202, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   - {fileID: -2080233313, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  enemyScore: 200
   bulletObjectA: {fileID: 7617650364191304077, guid: 03ac7a6382da3436ebe6ef31f2d8aa7b, type: 3}
   bulletObjectB: {fileID: 7617650364191304077, guid: a4a31b2ec8dbb41d39ff9c333e35e1cd, type: 3}
+  itemCoin: {fileID: 93715988309985909, guid: a30094287226c476a8eadd45e0f14750, type: 3}
+  itemBoom: {fileID: 4590701567990969829, guid: d14b5359129d14967b25b2d6e60a707f, type: 3}
+  itemPower: {fileID: 9047285854668154447, guid: 8024ccbf614b34e2eab104486bdd6ef0, type: 3}
   maxShotDelay: 4
   curShotDelay: 0
   player: {fileID: 0}
