@@ -9,6 +9,10 @@ public class Item : MonoBehaviour
     void Awake()
    {
        rigid = GetComponent<Rigidbody2D>();
-       rigid.linearVelocity = Vector2.down *0.1f;
    }
+
+    void OnEnable()
+    {
+        rigid.linearVelocity = Vector2.down * 1.5f;
+    }
 }

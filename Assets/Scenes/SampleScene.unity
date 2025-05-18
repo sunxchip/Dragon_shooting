@@ -348,9 +348,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyObjs:
-  - {fileID: 7451196955879763686, guid: a5fbc23628e6d41c0a21f4b8a71e8750, type: 3}
-  - {fileID: 2326653860950558842, guid: 68121dce661bb4d508599fb1b74bf444, type: 3}
-  - {fileID: 8207552540392753454, guid: 41bb144fe447d4504acd259a6ba8c342, type: 3}
+  - 
+  - 
+  - 
   spawnPoints:
   - {fileID: 1223069106}
   - {fileID: 502661887}
@@ -374,6 +374,7 @@ MonoBehaviour:
   - {fileID: 954932789}
   - {fileID: 650034930}
   gameOverSet: {fileID: 298069672}
+  objectManager: {fileID: 277327664}
 --- !u!4 &103915604
 Transform:
   m_ObjectHideFlags: 0
@@ -495,6 +496,60 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 7, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &277327663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 277327665}
+  - component: {fileID: 277327664}
+  m_Layer: 0
+  m_Name: ObjectjManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &277327664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277327663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe510b720f1224cac9478819a9a94962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLPrefab: {fileID: 8207552540392753454, guid: 41bb144fe447d4504acd259a6ba8c342, type: 3}
+  enemyMPrefab: {fileID: 2326653860950558842, guid: 68121dce661bb4d508599fb1b74bf444, type: 3}
+  enemySPrefab: {fileID: 7451196955879763686, guid: a5fbc23628e6d41c0a21f4b8a71e8750, type: 3}
+  itemCoinPrefab: {fileID: 93715988309985909, guid: a30094287226c476a8eadd45e0f14750, type: 3}
+  itemPowerPrefab: {fileID: 9047285854668154447, guid: 8024ccbf614b34e2eab104486bdd6ef0, type: 3}
+  itemBoomPrefab: {fileID: 4590701567990969829, guid: d14b5359129d14967b25b2d6e60a707f, type: 3}
+  bulletPlayerAPrefab: {fileID: 5421376574891057552, guid: b824e54ef910b4d5a808c210147cede2, type: 3}
+  bulletPlayerBPrefab: {fileID: 7617650364191304077, guid: 209a0fca599904d8c891aba30a63a60e, type: 3}
+  bulletEnemyAPrefab: {fileID: 7617650364191304077, guid: 03ac7a6382da3436ebe6ef31f2d8aa7b, type: 3}
+  bulletEnemyBPrefab: {fileID: 7617650364191304077, guid: a4a31b2ec8dbb41d39ff9c333e35e1cd, type: 3}
+--- !u!4 &277327665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277327663}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &282482914
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,8 +2946,9 @@ MonoBehaviour:
   curShotDelay: 0
   bulletObjectA: {fileID: 5421376574891057552, guid: b824e54ef910b4d5a808c210147cede2, type: 3}
   bulletObjectB: {fileID: 7617650364191304077, guid: 209a0fca599904d8c891aba30a63a60e, type: 3}
-  manager: {fileID: 103915603}
+  gameManager: {fileID: 103915603}
   boomEffect: {fileID: 2146672089}
+  objectManager: {fileID: 277327664}
 --- !u!50 &1446938791
 Rigidbody2D:
   serializedVersion: 5
@@ -4065,3 +4121,4 @@ SceneRoots:
   - {fileID: 1093303032}
   - {fileID: 1057207937}
   - {fileID: 58974409}
+  - {fileID: 277327665}
