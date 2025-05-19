@@ -22,6 +22,7 @@ public class Background : MonoBehaviour
     {
         Move();
         Scrolling();
+        
     }
 
     void Move()

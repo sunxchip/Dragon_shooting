@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         if (enemyName == "S")
         {
             GameObject bullet = objectManager.MakeObj("BulletEnemyA");
-            bullet.transform.position = player.transform.position;
+            bullet.transform.position = transform.position;
             
             Rigidbody2D rigid= bullet.GetComponent<Rigidbody2D>();
             Vector3 dirVec = player.transform.position - transform.position;
@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour
     void Reload()
     {
         curShotDelay += Time.deltaTime;
-    }ㄴ
+    }
 
     
 //총알을 맞았을때 데미지 
