@@ -361,7 +361,7 @@ MonoBehaviour:
   - {fileID: 1820096456}
   - {fileID: 1669714431}
   - {fileID: 1703178192}
-  maxSpawnDelay: 2
+  nextSpawnDelay: 0
   curSpawnDelay: 0
   player: {fileID: 1446938787}
   scoreText: {fileID: 89279394}
@@ -375,6 +375,8 @@ MonoBehaviour:
   - {fileID: 650034930}
   gameOverSet: {fileID: 298069672}
   objectManager: {fileID: 277327664}
+  spawnIndex: 0
+  spawnEnd: 0
 --- !u!4 &103915604
 Transform:
   m_ObjectHideFlags: 0
@@ -525,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe510b720f1224cac9478819a9a94962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyBPrefab: {fileID: 4951047119755214507, guid: 8b8483a9779814ea38297633e5a915c2, type: 3}
   enemyLPrefab: {fileID: 8207552540392753454, guid: 41bb144fe447d4504acd259a6ba8c342, type: 3}
   enemyMPrefab: {fileID: 2326653860950558842, guid: 68121dce661bb4d508599fb1b74bf444, type: 3}
   enemySPrefab: {fileID: 7451196955879763686, guid: a5fbc23628e6d41c0a21f4b8a71e8750, type: 3}
@@ -535,6 +538,8 @@ MonoBehaviour:
   bulletPlayerBPrefab: {fileID: 7617650364191304077, guid: 209a0fca599904d8c891aba30a63a60e, type: 3}
   bulletEnemyAPrefab: {fileID: 7617650364191304077, guid: 03ac7a6382da3436ebe6ef31f2d8aa7b, type: 3}
   bulletEnemyBPrefab: {fileID: 7617650364191304077, guid: a4a31b2ec8dbb41d39ff9c333e35e1cd, type: 3}
+  bulletBossAPrefab: {fileID: 7617650364191304077, guid: 3ceab13d979a54376977730fcdfde28f, type: 3}
+  bulletBossBPrefab: {fileID: 7617650364191304077, guid: ee4b3fdab31994bdf8ae045337f1e918, type: 3}
 --- !u!4 &277327665
 Transform:
   m_ObjectHideFlags: 0

@@ -30,17 +30,23 @@ public class Enemy : MonoBehaviour
     
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
+    Animator anim;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
+        if (enemyName == "B")
+            anim = GetComponent<Animator>();
     }
 
     void OnEnable()
     {
         switch (enemyName)
         {
+            case "B":
+                health = 3000;
+                Stop();
+                break;
             case"L":
                 health = 40;
                 break;
@@ -52,9 +58,18 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+
+    void Stop()
+    {
+        Rigidbody2D rigid = GetComponent<Rigidbody2D>();
+        rigid.linearVelocity = Vector2.zero;
+    }
     
     void Update()
     {
+        if (enemyName == "B")
+            return;
+        
         Fire();
         Reload();
     }
@@ -113,10 +128,18 @@ public class Enemy : MonoBehaviour
         
         
         health -= dmg;
-        spriteRenderer.sprite = sprites[1];
-        //바꾼 스프라이트를 돌리기 위해 시간차 함수 호출
-        Invoke("ReturnSprite",0.1f);
+        if (enemyName == "B")
+        {
+            anim.SetTrigger("OnHit");
+        }
+        else
+        {
+            //바꾼 스프라이트를 돌리기 위해 시간차 함수 호출
+            spriteRenderer.sprite = sprites[1];
+            Invoke("ReturnSprite", 0.1f);
+        }
         
+
         //죽으면 파괴
         if (health <= 0)
         {
@@ -124,7 +147,7 @@ public class Enemy : MonoBehaviour
             playerLogic.score += enemyScore;
             
             //#. Random Ratio Item Drop
-            int ran = Random.Range(0, 10);
+            int ran = enemyName == "B" ? 0 : Random.Range(0, 10);
             if (ran < 3) //Not Item 30%
             {
                 Debug.Log("Not Item");
@@ -160,7 +183,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "BorderBullet")
+        if (collision.gameObject.tag == "BorderBullet" && enemyName != "B")
         {
             transform.rotation=Quaternion.identity;
             gameObject.SetActive(false);
