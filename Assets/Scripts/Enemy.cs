@@ -123,33 +123,32 @@ public class Enemy : MonoBehaviour
         if(curPatternCount < maxPatternCount[patternIndex])
             Invoke("FireFoward",2f);
         else
-        {
             Invoke("Think",2);
-        }
+        
     }
 
     void FireShot()
     {
         //#.Fire 5 Random Shotgun Bullet to Player
-        for (int index =0; index <5; index++)
+        for (int index = 0; index < 5; index++)
         {
             GameObject bullet = objectManager.MakeObj("BulletEnemyB");
             bullet.transform.position = transform.position;
-            
-            Rigidbody2D rigid= bullet.GetComponent<Rigidbody2D>();
+
+            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
             Vector2 dirVec = player.transform.position - transform.position;
             Vector2 ranVec = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(0f, 2f));
             dirVec += ranVec;
-            rigid.AddForce(dirVec.normalized*3,ForceMode2D.Impulse);
-        
-            curPatternCount++;
+            rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
+        }
+
+        curPatternCount++;
             if(curPatternCount < maxPatternCount[patternIndex])
                 Invoke("FireShot",3.5f);
             else
-            {
                 Invoke("Think",3);
-            }
-        }
+            
+        
        
     }
 
@@ -169,15 +168,16 @@ public class Enemy : MonoBehaviour
         if(curPatternCount < maxPatternCount[patternIndex])
             Invoke("FireArc",0.15f);
         else
-        {
             Invoke("Think",3);
-        }
     }
 
     void FireAround()
     {
         // #.Fire Around
         int roundNumA = 50;
+        int roundNumB = 40;
+        int roundNum = curPatternCount % 2 == 0 ? roundNumA : roundNumB;
+        
 
         for (int index = 0; index < roundNumA; index++)
         {
@@ -187,24 +187,23 @@ public class Enemy : MonoBehaviour
 
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
             Vector2 dirVec = new Vector2(
-                Mathf.Cos(Mathf.PI * 2 * index / roundNumA),
-                Mathf.Sin(Mathf.PI * 2 * index / roundNumA)
+                Mathf.Cos(Mathf.PI * 2 * index / roundNum),
+                Mathf.Sin(Mathf.PI * 2 * index / roundNum)
             );
 
-            rigid.AddForce(dirVec.normalized * 5, ForceMode2D.Impulse);
+            rigid.AddForce(dirVec.normalized * 2, ForceMode2D.Impulse);
 
-            Vector3 rotVec = Vector3.forward * 360 * index / roundNumA + Vector3.forward * 90;
+            Vector3 rotVec = Vector3.forward * 360 * index / roundNum + Vector3.forward * 90;
             bullet.transform.Rotate(rotVec);
         }
 
      
-     curPatternCount++;
-     if(curPatternCount < maxPatternCount[patternIndex])
-         Invoke("FireAround",0.7f);
-     else
-     {
-         Invoke("Think",3);
-     }
+        curPatternCount++;
+        
+        if(curPatternCount < maxPatternCount[patternIndex])
+            Invoke("FireAround",0.7f);
+        else
+            Invoke("Think",3);
     }
     
     void Update()
