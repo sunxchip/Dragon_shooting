@@ -35,6 +35,8 @@ public class Enemy : MonoBehaviour
     public int patternIndex;
     public int curPatternCount;
     public int[] maxPatternCount;
+    
+    public GameManager gameManager;
 
     void Awake()
     {
@@ -314,6 +316,7 @@ public class Enemy : MonoBehaviour
             
             gameObject.SetActive(false);
             transform.rotation=Quaternion.identity;
+            gameManager.CallExplosion(transform.position, "enemyName");
         }
     }
 

@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
       Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
       Enemy enemyLogic = enemy.GetComponent<Enemy>();
       enemyLogic.player = player;
+      enemyLogic.gameManager = this;
       enemyLogic.objectManager = objectManager;
 
       if (enemyPoint == 5 || enemyPoint==6) //오른쪽 적 스폰
@@ -182,6 +183,15 @@ public class GameManager : MonoBehaviour
       Player playerLogic = player.GetComponent<Player>();
       playerLogic.isHit = true;
       playerLogic.StartCoroutine(playerLogic.OffHit());
+   }
+
+   public void CallExplosion(Vector3 pos, string type)
+   {
+      GameObject explosion = objectManager.MakeObj("Explosion");
+      Explosion explosionLogic = explosion.GetComponent<Explosion>();
+      
+      explosion.transform.position = pos;
+      explosionLogic.StartExplosion(type);
    }
 
    public void GameOver()
