@@ -23,7 +23,7 @@ public class Explosion : MonoBehaviour
 
     public void StartExplosion(string target)
     {
-        anim.SetTrigger("OnExpiosion");
+        anim.SetTrigger("OnExplosion");
 
         switch (target)
         {

@@ -61,6 +61,11 @@ public class Player : MonoBehaviour
     void Start()
     {
         life = 3;
+        
+        foreach (GameObject follower in followers)
+        {
+            follower.SetActive(false);
+        }
     }
 
 //캡슐화
@@ -303,12 +308,20 @@ public class Player : MonoBehaviour
 
     void AddFollower()
     {
-        if (power == 4)
-            followers[0].SetActive(true);
-        else if (power == 5)
-            followers[1].SetActive(true);
-        else if (power == 6)
-            followers[2].SetActive(true);
+        for (int i = 0; i < power && i < followers.Length; i++)
+        {
+            if (!followers[i].activeSelf)
+            {
+                followers[i].SetActive(true);
+            }
+        }
+        
+        // if (power == 4)
+        //     followers[0].SetActive(true);
+        // else if (power == 5)
+        //     followers[1].SetActive(true);
+        // else if (power == 6)
+        //     followers[2].SetActive(true);
     }
 
     

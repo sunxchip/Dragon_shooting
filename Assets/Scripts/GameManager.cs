@@ -12,6 +12,11 @@ using System.IO;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+
+   public int stage;
+   public Animator stageAnim;
+   public Animator clearAnim;
+   
    public string[] enemyObjs;
    public Transform[] spawnPoints;
 
@@ -36,7 +41,31 @@ public class GameManager : MonoBehaviour
    {
       spawnList = new List<Spawn>();
       enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL","EnemyB"};
+      StageStart();
+   }
+
+   public void StageStart()
+   {
+      //#.Stage UI Load
+      stageAnim.SetTrigger("On");
+      stageAnim.GetComponent<Text>().text = "STAGE" + stage + "\nSTART!";
+      clearAnim.GetComponent<Text>().text="STAGE" + stage + "\nCLEAR!";
+      //#.Enemy Spawn File Read
       ReadSpawnFile();
+      
+      //#. Fade In
+   }
+
+   public void StageEnd()
+   {
+      //#. Clear UI Load 
+      clearAnim.SetTrigger("On");
+      ;
+      //#. Stage Increament
+      stage++;
+      
+      //#. Fade Out 
+      //#. Player Repos
    }
 
    void ReadSpawnFile()
@@ -47,7 +76,7 @@ public class GameManager : MonoBehaviour
        spawnEnd = false;
        
        //리스폰 파일 읽기
-       TextAsset textFile = Resources.Load("Stage 0") as TextAsset;
+       TextAsset textFile = Resources.Load("Stage"+ stage) as TextAsset;
        StringReader stringReader = new StringReader(textFile.text);
 
        //한줄씩 데이터 저장
